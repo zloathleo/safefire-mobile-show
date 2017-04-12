@@ -7,7 +7,10 @@ import IconJZFH from 'material-ui/svg-icons/action/trending-up';
 import IconArrowUpward from 'material-ui/svg-icons/navigation/arrow-upward';
 
 
-import { black } from 'material-ui/styles/colors';
+import { transparent, black } from 'material-ui/styles/colors';
+
+import Utils from './Utils';
+import DataRandom from './DataRandom';
 
 const styles = {
     paper: {
@@ -32,64 +35,115 @@ const styles = {
     }
 };
 
+let lineChartData = {
+    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    datasets: [
+        {
+            label: "dataset4",
+            backgroundColor: "rgba(228,228,228,0.6)",
+            data: [2, 5, 9, 12, 11, 8, 6, 4, 2, 1]
+        },
+
+        {
+            label: "dataset2",
+            backgroundColor: "rgba(255,69,105,0.9)",
+            data: [6, 2, 3, 6, 7, 5, 11, 12, 13, 16]
+        },
+
+        {
+            label: "dataset3",
+            backgroundColor: "rgba(255,197,179,0.9)",
+            data: [9, 8, 6, 10, 16, 15, 10, 6, 4, 2]
+        },
+
+    ]
+};
+
+let config = {
+    radar: {
+        count: 60,
+        fillColor: 'rgba(244,67,54,' + 0.017 + ')',//历史填充
+        lineColor: "rgba(244,67,54,0.1)",//历史线色
+        newFillColor: transparent,//当前填充
+        newLineColor: 'rgba(255,69,105,0.8)',//当前线色
+    }
+}
+
+let radarChartData = {
+    labels: ["No1", "No2", "No3", "No4"],
+    datasets: [
+    ]
+};
 
 
 class MyIndexContent extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.refreshData = this.refreshData.bind(this);
+        this.radarChart = undefined;
+    }
+
     componentDidMount() {
-        console.log('this.chartDom:' + this.chartDom);
-
-        let chartData = {
-            labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-            datasets: [
-
-
-
-                {
-                    label: "dataset4",
-                    backgroundColor: "rgba(228,228,228,0.6)",
-                    // pointDotRadius: 0,
-                    // pointDot: false,
-                    data: [2, 5, 9, 12, 11, 8, 6, 4, 2, 1]
-                },
-
-                {
-                    label: "dataset2",
-                    backgroundColor: "rgba(255,69,105,0.9)",
-                    // pointDotRadius: 0,
-                    // pointDot: false,
-                    data: [6, 2, 3, 6, 7, 5, 11, 12, 13, 16]
-                },
-
-                {
-                    label: "dataset3",
-                    backgroundColor: "rgba(255,197,179,0.9)",
-                    // pointDotRadius: 0,
-                    // pointDot: false,
-                    data: [9, 8, 6, 10, 16, 15, 10, 6, 4, 2]
-                },
-
-                // {
-                //     label: "Prime1",
-                //     backgroundColor: "rgba(255,57,90,1)",
-                //     data: [12, 7, 5, 7, 11, 13, 10, 4, 12, 29]
-                // },
-            ]
-        };
-        let _options = {
+        let lineOptions = {
             elements: {
                 point: { radius: 0, borderWidth: 0 },
-                line: { borderColor: 'rgba(255,255,255,0)' }
+                line: { borderColor: transparent }
             }
         };
 
         new Chart(this.chartDom, {
             type: 'line',
-            data: chartData,
-            options: _options,
+            data: lineChartData,
+            options: lineOptions,
         });
 
-        //
+        let radarDatasets = radarChartData.datasets;
+        DataRandom.randomInitRadarDatasets(radarDatasets, config.radar.count, config.radar.lineColor, config.radar.fillColor);
+
+        let radarOptions = {
+            scale: {
+                ticks: {
+                    min: 1100,
+                    max: 1500,
+                    stepSize: 50,
+                }
+            },
+            animation: {
+                duration: 800,//200ms
+            },
+            legend: {
+                display: false,
+            }
+        };
+
+        this.radarChart = new Chart(this.radarChartDom, {
+            type: 'radar',
+            data: radarChartData,
+            options: radarOptions,
+        });
+
+        setInterval(this.refreshData, 1000);
+    }
+
+    refreshData() {
+
+        let radarDatasets = radarChartData.datasets;
+        if (radarDatasets.length > 0) {
+            let dataItem = radarDatasets[0];
+            DataRandom.updateHistoryRadarData(dataItem, config.radar.lineColor, config.radar.fillColor);
+
+        }
+
+        //最前的最后画  
+        if (radarDatasets.length >= config.radar.count) {
+            radarDatasets.pop();
+            DataRandom.randomAppendNewRadarData(radarDatasets, config.radar.newLineColor, config.radar.newFillColor);
+        } else {
+            DataRandom.randomAppendNewRadarData(radarDatasets, config.radar.newLineColor, config.radar.newFillColor);
+        }
+
+        this.radarChart.update();
     }
 
     render() {
@@ -100,28 +154,32 @@ class MyIndexContent extends React.Component {
                 </Paper >
 
                 <Paper zDepth={2} style={styles.paper}>
+                    <canvas ref={(ref) => this.radarChartDom = ref} ></canvas>
+                </Paper >
+
+                <Paper zDepth={2} style={styles.paper}>
                     <div>
                         <IconJZFH style={styles.icon} color={black} />机组负荷
-            </div>
+                    </div>
                     <h2 style={styles.valueDisplay}>MW 990.630</h2>
                     <IconArrowUpward style={styles.icon} color={black} />15.121%
-        </Paper >
+               </Paper >
 
                 <Paper zDepth={2} style={styles.paper}>
                     <div>
                         <IconJZFH style={styles.icon} color={black} />锅炉负荷
-            </div>
+                    </div>
                     <h2 style={styles.valueDisplay}>T/H 4.563</h2>
                     <IconArrowUpward style={styles.icon} color={black} />3.321%
-        </Paper >
+                </Paper >
 
                 <Paper zDepth={2} style={styles.paper}>
                     <div>
                         <IconJZFH style={styles.icon} color={black} />主汽压力
-            </div>
+                      </div>
                     <h2 style={styles.valueDisplay}>MPa 1.051</h2>
                     <IconArrowUpward style={styles.icon} color={black} />1.764%
-        </Paper >
+                 </Paper >
             </div>
 
         );

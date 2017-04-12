@@ -20,7 +20,7 @@ class LoginComp extends React.Component {
     }
 
     doLogin() {
-        alert(123);
+        console.log(this.loginName.value);
         window.location = 'main.html';
         return false;
     }

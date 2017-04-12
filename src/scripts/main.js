@@ -92,7 +92,7 @@ class MainAppBar extends React.Component {
           >
             <MyDrawerContent />
           </Drawer>
- 
+
           <MyIndexContent />
 
         </div>

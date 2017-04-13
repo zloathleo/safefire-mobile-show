@@ -4,9 +4,10 @@ import Utils from './Utils';
 
 class DataRandom {
 
-    static randomInitRadarDatasets(radarDatasets, count, newLineColor, fillColor) {
+    static randomInitRadarDatasets(count, newLineColor, fillColor) {
+        let datasets = [];
         for (let i = 0; i < count; i++) {
-            radarDatasets.unshift({
+            datasets.unshift({
                 borderWidth: 0.3,
                 pointRadius: 0,
                 backgroundColor: fillColor,//无填充
@@ -22,6 +23,7 @@ class DataRandom {
                 ]
             });
         }
+        return datasets;
     }
 
     static updateHistoryRadarData(dataItem, lineColor, fillColor) {
@@ -35,8 +37,9 @@ class DataRandom {
     }
 
 
-    static randomAppendNewRadarData(radarDatasets, newLineColor, fillColor) {
-        radarDatasets.unshift({
+    static randomNewRadarData(newLineColor) {
+        //radarDatasets.unshift(
+        return {
             borderWidth: 1.2,
             pointRadius: 2,
             backgroundColor: transparent,//无填充
@@ -49,7 +52,7 @@ class DataRandom {
                 Utils.randomFloatRange(1300, 1400),
                 Utils.randomFloatRange(1200, 1400)
             ]
-        });
+        }
     }
 
 

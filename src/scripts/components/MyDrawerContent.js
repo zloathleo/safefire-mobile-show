@@ -14,7 +14,7 @@ import ActionInfo from 'material-ui/svg-icons/action/info';
 
 const styles = {
     logo: {
-        backgroundImage: 'url("/assets/image/powermax-200.png")',
+        backgroundImage: 'url("../assets/image/powermax-200.png")',
         backgroundRepeat: 'no-repeat',
         height: '41px',
         backgroundSize: '80%',

@@ -59,8 +59,8 @@ let lineChartData = {
     ]
 };
 
-let config = {
-    radar: {
+const config = {
+    tempChart: {
         count: 60,
         fillColor: 'rgba(244,67,54,' + 0.017 + ')',//历史填充
         lineColor: "rgba(244,67,54,0.1)",//历史线色
@@ -69,19 +69,16 @@ let config = {
     }
 }
 
-let radarChartData = {
-    labels: ["No1", "No2", "No3", "No4"],
-    datasets: [
-    ]
-};
-
-
 class MyIndexContent extends React.Component {
 
     constructor(props) {
         super(props);
         this.refreshData = this.refreshData.bind(this);
-        this.radarChart = undefined;
+        this.tempRadarChartDom = undefined;
+        this.tempRadarChart = undefined;
+
+        this.tempLineChartDom = undefined;
+        this.tempLineChart = undefined;
     }
 
     componentDidMount() {
@@ -98,15 +95,27 @@ class MyIndexContent extends React.Component {
             options: lineOptions,
         });
 
-        let radarDatasets = radarChartData.datasets;
-        DataRandom.randomInitRadarDatasets(radarDatasets, config.radar.count, config.radar.lineColor, config.radar.fillColor);
-
-        let radarOptions = {
+        ///////////////////////////
+        //////四角
+        /////////////////////////// 
+        let _options = {
+            title: {
+                display: true,
+                text: 'temperature in corners',
+                fontFamily: 'sans-serif',
+                fontStyle: 'normal',
+                fontSize: 16,
+            },
             scale: {
                 ticks: {
+                    beginAtZero: false,
                     min: 1100,
                     max: 1500,
+                    maxTicksLimit: 1500,
                     stepSize: 50,
+                    suggestedMax: 1500,
+                    suggestedMin: 1100,
+                    fixedStepSize: 50,
                 }
             },
             animation: {
@@ -114,36 +123,66 @@ class MyIndexContent extends React.Component {
             },
             legend: {
                 display: false,
+            },
+            elements: {
+
+                point: { radius: 0, borderWidth: 0 },
+                line: {
+                    tension: 0.2,
+                    borderColor: transparent
+                }
             }
         };
+        let initTempDataSets = DataRandom.randomInitRadarDatasets(config.tempChart.count, config.tempChart.lineColor, config.tempChart.fillColor);
+        //  temp LineChart 
+        this.tempLineChart = new Chart(this.tempLineChartDom, {
+            type: 'line',
+            data: {
+                labels: ["No1", "No2", "No3", "No4"],
+                datasets: initTempDataSets,
+            },
+            options: _options,
+        });
 
-        this.radarChart = new Chart(this.radarChartDom, {
+        //radar
+        let initTempRadarDataSets = initTempDataSets.slice(0);
+        this.tempRadarChart = new Chart(this.tempRadarChartDom, {
             type: 'radar',
-            data: radarChartData,
-            options: radarOptions,
+            data: {
+                labels: ["No1", "No2", "No3", "No4"],
+                datasets: initTempRadarDataSets,
+            },
+            options: _options,
         });
 
         setInterval(this.refreshData, 1000);
     }
 
     refreshData() {
+        //temp line  
+        let newData = DataRandom.randomNewRadarData(config.tempChart.newLineColor);
 
-        let radarDatasets = radarChartData.datasets;
-        if (radarDatasets.length > 0) {
-            let dataItem = radarDatasets[0];
-            DataRandom.updateHistoryRadarData(dataItem, config.radar.lineColor, config.radar.fillColor);
+        let tempLineDatasets = this.tempLineChart.data.datasets;
+        this.refreshTempChart(tempLineDatasets, newData);
+        this.tempLineChart.update();
 
+        let radarDatasets = this.tempRadarChart.data.datasets;
+        this.refreshTempChart(radarDatasets, newData);
+        this.tempRadarChart.update();
+    }
+
+    refreshTempChart(datasets, newData) {
+        if (datasets.length > 0) {
+            let dataItem = datasets[0];
+            DataRandom.updateHistoryRadarData(dataItem, config.tempChart.lineColor, config.tempChart.fillColor);
         }
-
         //最前的最后画  
-        if (radarDatasets.length >= config.radar.count) {
-            radarDatasets.pop();
-            DataRandom.randomAppendNewRadarData(radarDatasets, config.radar.newLineColor, config.radar.newFillColor);
+        if (datasets.length >= config.tempChart.count) {
+            datasets.pop();
+            datasets.unshift(newData);
         } else {
-            DataRandom.randomAppendNewRadarData(radarDatasets, config.radar.newLineColor, config.radar.newFillColor);
+            datasets.unshift(newData);
         }
-
-        this.radarChart.update();
     }
 
     render() {
@@ -154,7 +193,11 @@ class MyIndexContent extends React.Component {
                 </Paper >
 
                 <Paper zDepth={2} style={styles.paper}>
-                    <canvas ref={(ref) => this.radarChartDom = ref} ></canvas>
+                    <canvas ref={(ref) => this.tempLineChartDom = ref} ></canvas>
+                </Paper >
+
+                <Paper zDepth={2} style={styles.paper}>
+                    <canvas ref={(ref) => this.tempRadarChartDom = ref} ></canvas>
                 </Paper >
 
                 <Paper zDepth={2} style={styles.paper}>

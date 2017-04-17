@@ -7,7 +7,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    vendor: ['react', 'react-dom','jquery'], 
+    vendor: ['react', 'react-dom'],
     login: './src/scripts/login.js',
     main: './src/scripts/main.js',
   },
@@ -39,7 +39,7 @@ module.exports = {
       name: 'vendor', // 将公共模块提取，生成名为`vendor-bundle.js`
       minChunks: Infinity
     }),
-    
+
     new ExtractTextPlugin('css/[name]-bundle.css'), //单独使用link标签加载css并设置路径，相对于output配置中的publickPath 
 
     //根据模板插入css/js等生成最终HTML

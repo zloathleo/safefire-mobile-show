@@ -40,13 +40,12 @@
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
-    "antd": "^2.7.4",
-    "chart.js": "^2.5.0", 
+    "animejs": "^2.0.2",
+    "chart.js": "^2.5.0",
     "fs-extra": "^2.0.0",
-    "jquery": "^3.2.1",
     "konva": "^1.4.0",
     "material-ui": "^0.17.1",
-    "msgpack-lite": "^0.1.26",
+    "moment": "^2.18.1",
     "react-chartjs": "^0.8.0",
     "react-konva": "^1.1.1",
     "react-tap-event-plugin": "^2.0.1"

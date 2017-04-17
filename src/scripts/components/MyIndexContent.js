@@ -35,30 +35,6 @@ const styles = {
     }
 };
 
-let lineChartData = {
-    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    datasets: [
-        {
-            label: "dataset4",
-            backgroundColor: "rgba(228,228,228,0.6)",
-            data: [2, 5, 9, 12, 11, 8, 6, 4, 2, 1]
-        },
-
-        {
-            label: "dataset2",
-            backgroundColor: "rgba(255,69,105,0.9)",
-            data: [6, 2, 3, 6, 7, 5, 11, 12, 13, 16]
-        },
-
-        {
-            label: "dataset3",
-            backgroundColor: "rgba(255,197,179,0.9)",
-            data: [9, 8, 6, 10, 16, 15, 10, 6, 4, 2]
-        },
-
-    ]
-};
-
 const config = {
     tempChart: {
         count: 60,
@@ -66,7 +42,20 @@ const config = {
         lineColor: "rgba(244,67,54,0.1)",//历史线色
         newFillColor: transparent,//当前填充
         newLineColor: 'rgba(255,69,105,0.8)',//当前线色
-    }
+    },
+    tempHisChartOptions: {
+        title: {
+            display: true,
+            text: 'temperature history in corners',
+            fontFamily: 'sans-serif',
+            fontStyle: 'normal',
+            fontSize: 16,
+        },
+        elements: {
+            point: { radius: 2 },
+            line: { borderWidth: 1 }
+        },
+    },
 }
 
 class MyIndexContent extends React.Component {
@@ -79,20 +68,19 @@ class MyIndexContent extends React.Component {
 
         this.tempLineChartDom = undefined;
         this.tempLineChart = undefined;
+
+        this.tempHisAreaLineChartDom = undefined;
+        this.tempHisAreaLineChart = undefined;
     }
 
     componentDidMount() {
-        let lineOptions = {
-            elements: {
-                point: { radius: 0, borderWidth: 0 },
-                line: { borderColor: transparent }
-            }
-        };
+        let lineChartData = DataRandom.requestTempHistoryDatasets();
 
-        new Chart(this.chartDom, {
+        //历史linearea chart
+        this.tempHisAreaLineChart = new Chart(this.tempHisAreaLineChartDom, {
             type: 'line',
             data: lineChartData,
-            options: lineOptions,
+            options: config.tempHisChartOptions,
         });
 
         ///////////////////////////
@@ -188,17 +176,17 @@ class MyIndexContent extends React.Component {
     render() {
         return (
             <div>
-                <Paper zDepth={2} style={styles.paper}>
-                    <canvas ref={(ref) => this.chartDom = ref} ></canvas>
-                </Paper >
-
-                <Paper zDepth={2} style={styles.paper}>
-                    <canvas ref={(ref) => this.tempLineChartDom = ref} ></canvas>
-                </Paper >
 
                 <Paper zDepth={2} style={styles.paper}>
                     <canvas ref={(ref) => this.tempRadarChartDom = ref} ></canvas>
                 </Paper >
+                <Paper zDepth={2} style={styles.paper}>
+                    <canvas ref={(ref) => this.tempLineChartDom = ref} ></canvas>
+                </Paper >
+                <Paper zDepth={2} style={styles.paper}>
+                    <canvas ref={(ref) => this.tempHisAreaLineChartDom = ref} height={240} ></canvas>
+                </Paper >
+
 
                 <Paper zDepth={2} style={styles.paper}>
                     <div>

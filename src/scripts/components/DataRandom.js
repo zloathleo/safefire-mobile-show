@@ -26,29 +26,25 @@ class DataRandom {
             labels: _label,
             datasets: [
                 {
-                    label: "no1",
-                    // fill: false,
+                    label: "no1", 
                     borderColor: "rgba(228,228,228,0.4)",
                     backgroundColor: "rgba(228,228,228,0.4)",
                     data: _datas.no1,
                 },
                 {
-                    label: "no2",
-                    // fill: false,
+                    label: "no2", 
                     borderColor: "rgba(255,197,179,0.5)",
                     backgroundColor: "rgba(255,197,179,0.5)",
                     data: _datas.no2,
                 },
                 {
-                    label: "no3",
-                    // fill: false,
+                    label: "no3", 
                     borderColor: "rgba(255,69,105,0.8)",
                     backgroundColor: "rgba(255,69,105,0.8)",
                     data: _datas.no3,
                 },
                 {
-                    label: "no4",
-                    // fill: false,
+                    label: "no4", 
                     backgroundColor: "rgba(213,0,0 ,1)",
                     borderColor: "rgba(213,0,0 ,1)",
                     data: _datas.no4,

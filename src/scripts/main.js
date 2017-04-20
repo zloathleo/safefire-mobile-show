@@ -52,12 +52,16 @@ class MainAppBar extends React.Component {
 
   state = {
     open: false,
+    title: 'Overview',
   };
 
   constructor(props) {
     super(props);
 
     this.handleCollapse = this.handleCollapse.bind(this);
+    this.handleChangeDrawerItem = this.handleChangeDrawerItem.bind(this);
+
+
   }
 
   handleCollapse() {
@@ -69,12 +73,19 @@ class MainAppBar extends React.Component {
     return false;
   }
 
+  handleChangeDrawerItem(_key) {
+    //改变页
+    console.log('handleChangeDrawerItem');
+    this.setState({ open: false, title: _key });
+    this.myIndexContent.setState({ page: _key });
+  }
+
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
           <AppBar
-            title="Overview"
+            title={this.state.title}
             style={{ background: 'linear-gradient(60deg, #AD1457, #880E4F)' }}//背景渐变
             onLeftIconButtonTouchTap={this.handleCollapse}
             iconElementRight={<IconButton onClick={this.doLogout}><IconArrowForward /></IconButton>}
@@ -88,12 +99,11 @@ class MainAppBar extends React.Component {
             onRequestChange={(open) => this.setState({ open })}
             containerStyle={{
               background: '#333333',
-            }}
-          >
-            <MyDrawerContent />
+            }}>
+            <MyDrawerContent handleChangeDrawerItem={this.handleChangeDrawerItem} />
           </Drawer>
 
-          <MyIndexContent />
+          <MyIndexContent ref={(ref) => this.myIndexContent = ref} handleChangeDrawerItem={this.handleChangeDrawerItem}/>
 
         </div>
       </MuiThemeProvider >

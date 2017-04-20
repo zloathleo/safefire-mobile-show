@@ -23,25 +23,37 @@ const styles = {
     }
 };
 
-const MyDrawerContent = () => (
-    <div>
-        <div style={{ marginTop: '10%', marginBottom: '10%', marginLeft: '26%' }}>
-            <Chip backgroundColor={'#424242'} >
-                <Avatar
-                    backgroundColor={'#424242'}
-                    icon={<SvgIconVerifiedUser />} />
-                Guest
+class MyDrawerContent extends React.Component {
+    constructor(props) {
+        super(props); 
+        
+    }
+
+    handleClickListItem(_key) {  
+        //from parent pass
+        this.props.handleChangeDrawerItem(_key);
+    } 
+
+    render() {
+        return (
+            <div>
+                <div style={{ marginTop: '10%', marginBottom: '10%', marginLeft: '26%' }}>
+                    <Chip backgroundColor={'#424242'} >
+                        <Avatar
+                            backgroundColor={'#424242'}
+                            icon={<SvgIconVerifiedUser />} />
+                        Guest
             </Chip>
-        </div>
-        <List>
-            <ListItem primaryText="Overview" rightIcon={<IconOverview />} />
-            <ListItem primaryText="ToDo" rightIcon={<ActionGrade />} />
-            <ListItem primaryText="ToDo" rightIcon={<ContentSend />} />
-            <ListItem primaryText="ToDo" rightIcon={<ContentDrafts />} />
-            <ListItem primaryText="About" rightIcon={<IconAbout />} />
-        </List>
-        <div style={styles.logo} />
-    </div>
-);
+                </div>
+                <List>
+                    <ListItem onClick={this.handleClickListItem.bind(this, 'Overview')} primaryText="Overview" rightIcon={<IconOverview />} />
+                    <ListItem onClick={this.handleClickListItem.bind(this, 'Analyze')} primaryText="Analyze" rightIcon={<ActionGrade />} />
+                    <ListItem onClick={this.handleClickListItem.bind(this, 'About')} primaryText="About" rightIcon={<IconAbout />} />
+                </List>
+                <div style={styles.logo} />
+            </div>
+        );
+    }
+}
 
 export default MyDrawerContent;

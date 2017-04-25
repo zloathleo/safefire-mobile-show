@@ -46,7 +46,7 @@ const config = {
     },
 }
 
-class MyAnalyze extends React.Component {
+class Analyze extends React.Component {
 
     constructor(props) {
         super(props);
@@ -62,6 +62,7 @@ class MyAnalyze extends React.Component {
     }
 
     componentDidMount() {
+        console.log('Analyze componentDidMount');
         let lineChartData = DataRandom.requestTempHistoryDatasets();
 
         //历史linearea chart
@@ -101,7 +102,6 @@ class MyAnalyze extends React.Component {
                 display: false,
             },
             elements: {
-
                 point: { radius: 0, borderWidth: 0 },
                 line: {
                     tension: 0.2,
@@ -131,10 +131,15 @@ class MyAnalyze extends React.Component {
             options: _options,
         });
 
-        setInterval(this.refreshData, 1000);
+        this.refreshTask = setInterval(this.refreshData, 1000);
+    }
+
+    componentWillUnmount() { 
+        clearInterval(this.refreshTask);
     }
 
     refreshData() {
+        console.log('refreshData');
         //temp line  
         let newData = DataRandom.randomNewRadarData(config.tempChart.newLineColor);
 
@@ -163,21 +168,21 @@ class MyAnalyze extends React.Component {
 
     render() {
         return (
-            <div> 
+            <div>
                 <Paper zDepth={2} style={styles.paper}>
-                    <canvas ref={(ref) => this.tempRadarChartDom = ref} ></canvas>
+                    <canvas ref={(ref) => this.tempRadarChartDom = ref} height={340} ></canvas>
                 </Paper >
                 <Paper zDepth={2} style={styles.paper}>
                     <canvas ref={(ref) => this.tempLineChartDom = ref} ></canvas>
                 </Paper >
                 <Paper zDepth={2} style={styles.paper}>
                     <canvas ref={(ref) => this.tempHisAreaLineChartDom = ref} height={240} ></canvas>
-                </Paper > 
- 
+                </Paper >
+
             </div>
 
         );
     }
 }
 
-export default MyAnalyze;
+export default Analyze;

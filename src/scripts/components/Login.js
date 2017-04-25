@@ -1,18 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// import Animate from 'animate.css'
-import Animejs from 'animejs';
-import './css/login.css';
+import { Link } from 'react-router-dom';
 
-class LoginComp extends React.Component {
+import Animejs from 'animejs';
+import '../css/login.css';
+
+class Login extends React.Component {
 
     state = {
         login: true,
     };
-
+  
     constructor(props) {
         super(props);
+        this.mi
         this.doLogin = this.doLogin.bind(this);
         this.toRegister = this.toRegister.bind(this);
         this.toLogin = this.toLogin.bind(this);
@@ -21,8 +23,7 @@ class LoginComp extends React.Component {
     }
 
     componentDidMount() {
-        let _duration = 800;
-        console.log('componentDidMount');
+        let _duration = 800; 
         this.loginHiddenAnim = Animejs({
             targets: this.loginForm,
             height: 0,
@@ -112,38 +113,40 @@ class LoginComp extends React.Component {
     toRegister() {
         this.loginHiddenAnim.restart();
         this.registerShowAnim.restart();
-        // $(this.loginForm).addClass('animated bounceOutLeft');
-        //   $("div[class$='-form']").animate({ height: "toggle", opacity: "toggle" }, "slow"); 
-        // $(this.registerForm).animate({ height: "toggle", opacity: "toggle" }, "slow");
-        // $(this.loginForm).animate({ height: "toggle", opacity: "toggle" }, "slow");
     }
 
-    doLogin() {
-        console.log(this.loginName.value);
-        window.location = 'main.html';
+    doLogin(e) {
+        //api 调用 Link
+        this.loginLink.handleClick(e.nativeEvent);
         return false;
     }
 
-
     render() {
         return (
-            <div className="form">
-                <div style={{ display: 'none', height: 0 }} ref={(ref) => this.registerForm = ref}>
-                    <input type="text" placeholder="name" />
-                    <input type="password" placeholder="password" />
-                    <input type="text" placeholder="email address" />
-                    <button>create</button>
-                    <p className="message" onClick={this.toLogin}>Already registered? <a href="#">Sign In</a></p>
-                </div>
-                <div ref={(ref) => this.loginForm = ref}>
-                    <input type="text" placeholder="username" ref={(ref) => this.loginName = ref} />
-                    <input type="password" placeholder="password" ref={(ref) => this.loginPassword = ref} />
-                    <button onClick={this.doLogin}>login</button>
-                    <p className="message" onClick={this.toRegister}>Not registered? <a href="#">Create an account</a></p>
+            <div className='login-fullcontainer'>
+                <div className='login-page'>
+                    <div className="form">
+                        <div style={{ display: 'none', height: 0 }} ref={(ref) => this.registerForm = ref}>
+                            <input type="text" placeholder="name" />
+                            <input type="password" placeholder="password" />
+                            <input type="text" placeholder="email address" />
+                            <button>create</button>
+                            <p className="message" onClick={this.toLogin}>Already registered? <a href="#">Sign In</a></p>
+                        </div>
+                        <div ref={(ref) => this.loginForm = ref}>
+                            <input type="text" placeholder="username" ref={(ref) => this.loginName = ref} />
+                            <input type="password" placeholder="password" ref={(ref) => this.loginPassword = ref} />
+                            <button onClick={this.doLogin} >login</button>
+                            {/*链接Link*/}
+                            <Link ref={(ref) => this.loginLink = ref} to="/main/overview"></Link>
+                            <p className="message" onClick={this.toRegister}>Not registered? <a href="#">Create an account</a></p>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         )
     }
 }
 
-ReactDOM.render(<LoginComp />, document.getElementById('root'));
+export default Login;

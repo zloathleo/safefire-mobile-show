@@ -1,6 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
+
+import Overview from "./Overview";
+import Analyze from "./Analyze";
+
 import { AppBar, Drawer, MenuItem, Paper, IconButton } from 'material-ui';
 
 //material-ui bug
@@ -8,8 +14,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import MyDrawerContent from "./components/MyDrawerContent"
-import MyIndexContent from "./components/MyIndexContent"
+import DrawerContent from "./DrawerContent"
 
 //icon
 import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
@@ -17,22 +22,9 @@ import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 injectTapEventPlugin();
 
 const muiTheme = getMuiTheme({
-  palette: { 
+  palette: {
     primary1Color: '#88014F',
-    // primary2Color: _colors.cyan700,
-    // primary3Color: _colors.grey400,
-    // accent1Color: _colors.pinkA200,
-    // accent2Color: _colors.grey100,
-    // accent3Color: _colors.grey500,
     textColor: '#ffffff',
-    // secondaryTextColor: (0, _colorManipulator.fade)(_colors.darkBlack, 0.54),
-    // alternateTextColor: '#303030',
-    // canvasColor: '#333333',
-    // borderColor: _colors.grey300,
-    // disabledColor: (0, _colorManipulator.fade)(_colors.darkBlack, 0.3),
-    // pickerHeaderColor: _colors.cyan500,
-    // clockCircleColor: (0, _colorManipulator.fade)(_colors.darkBlack, 0.07),
-    // shadowColor: _colors.fullBlack
   }
 });
 
@@ -47,7 +39,7 @@ const styles = {
 };
 
 
-class MainAppBar extends React.Component {
+class Main extends React.Component {
 
   state = {
     open: false,
@@ -58,6 +50,7 @@ class MainAppBar extends React.Component {
     super(props);
 
     this.handleCollapse = this.handleCollapse.bind(this);
+    // this.doLogout = this.doLogout.bind(this);
     this.handleChangeDrawerItem = this.handleChangeDrawerItem.bind(this);
 
 
@@ -67,19 +60,27 @@ class MainAppBar extends React.Component {
     this.setState({ open: !this.state.open });
   }
 
-  doLogout() {
-    window.location = 'login.html';
+  doLogout(e) {
+    window.location = '/';
     return false;
   }
 
-  handleChangeDrawerItem(_key) {
+  handleChangeDrawerItem(_key, _nativeEvent) {
     //改变页
-    console.log('handleChangeDrawerItem');
+    let _routerHistory = this.router.history;
+    // console.log(_routerHistory);
+    // console.log('handleChangeDrawerItem'); 
+    if (_key == 'Overview') {
+      _routerHistory.replace('/main/overview');
+    } else if (_key == 'Analyze') {
+      _routerHistory.replace('/main/analyze');
+    }
     this.setState({ open: false, title: _key });
-    this.myIndexContent.setState({ page: _key });
   }
 
   render() {
+
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
@@ -99,10 +100,16 @@ class MainAppBar extends React.Component {
             containerStyle={{
               background: '#333333',
             }}>
-            <MyDrawerContent handleChangeDrawerItem={this.handleChangeDrawerItem} />
+            <DrawerContent handleChangeDrawerItem={this.handleChangeDrawerItem} />
           </Drawer>
 
-          <MyIndexContent ref={(ref) => this.myIndexContent = ref} handleChangeDrawerItem={this.handleChangeDrawerItem}/>
+          <Router ref={(ref) => this.router = ref} >
+            <div>
+              <Route path='/main/overview' component={() => (<Overview handleChangeDrawerItem={this.handleChangeDrawerItem} />)} />
+              <Route path='/main/analyze' component={Analyze} />
+            </div>
+          </Router >
+
 
         </div>
       </MuiThemeProvider >
@@ -110,5 +117,4 @@ class MainAppBar extends React.Component {
   }
 }
 
-
-ReactDOM.render(<MainAppBar />, document.getElementById('root'));
+export default Main;

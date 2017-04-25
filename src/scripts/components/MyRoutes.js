@@ -8,12 +8,15 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Login from "./Login";
 import Main from "./Main";
 
+import Overview from "./Overview";
+import Analyze from "./Analyze";
+
 
 const RouteConfig = () => (
     <Router>
         <div style={{ height: '100%' }}>
             <Route exact path='/' component={Login} />
-            <Route path='/main' component={Main} />
+            <Route path='/main' component={Main} /> 
         </div>
     </Router >
 )

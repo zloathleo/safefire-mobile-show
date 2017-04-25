@@ -39,7 +39,7 @@ const styles = {
     }
 };
 
-class MyOverview extends React.Component {
+class Overview extends React.Component {
 
     constructor(props) {
         super(props);
@@ -53,7 +53,11 @@ class MyOverview extends React.Component {
     }
 
     componentDidMount() {
-        // setInterval(this.refreshData, 1000);
+        // this.refreshTask = setInterval(this.refreshData, 1000);
+    }
+
+    componentWillUnmount() { 
+        // clearInterval(this.refreshTask);
     }
 
     refreshData() {
@@ -111,4 +115,4 @@ class MyOverview extends React.Component {
     }
 }
 
-export default MyOverview;
+export default Overview;

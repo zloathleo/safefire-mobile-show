@@ -1,8 +1,31 @@
+html {
+  height:100%;
+  margin: 0px; 
+}
+
+
+body {
+  height:100%;
+  margin: 0px; 
+}
+
+.login-fullcontainer{
+  height: 100%;
+  background: #880E4F; /* fallback for old browsers */
+  background: -webkit-linear-gradient(right, #AD1457, #880E4F);
+  background: -moz-linear-gradient(right, #AD1457, #880E4F);
+  background: -o-linear-gradient(right, #AD1457, #880E4F);
+  background: linear-gradient(to left, #AD1457, #880E4F);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;   
+}
+
 
 .login-page {
   width: 80%;
   padding: 13% 0 0;
-  margin: auto;
+  margin: auto; 
 }
 .form {
   position: relative;
@@ -87,13 +110,4 @@
 .container .info span .fa {
   color: #EF3B3A;
 }
-body {
-  background: #880E4F; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #AD1457, #880E4F);
-  background: -moz-linear-gradient(right, #AD1457, #880E4F);
-  background: -o-linear-gradient(right, #AD1457, #880E4F);
-  background: linear-gradient(to left, #AD1457, #880E4F);
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
-}
+

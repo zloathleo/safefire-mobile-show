@@ -8,6 +8,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: {
     vendor: ['react', 'react-dom'],
+    index: './src/scripts/index.js',
     login: './src/scripts/login.js',
     main: './src/scripts/main.js',
   },
@@ -63,6 +64,20 @@ module.exports = {
       template: './src/page/login.html', //html模板路径
       inject: 'body', //js插入的位置，true/'head'/'body'/false 
       chunks: ['vendor', 'login'],//需要引入的chunk，不配置就会引入所有页面的资源
+      minify: { //压缩HTML文件    
+        removeComments: true, //移除HTML中的注释
+        collapseWhitespace: false //删除空白符与换行符
+      },
+      hash: true, //为静态资源生成hash值
+    }),
+
+    //根据模板插入css/js等生成最终HTML
+    new HtmlWebpackPlugin({
+      // favicon: './src/img/favicon.ico', //favicon路径，通过webpack引入同时可以生成hash值
+      filename: './index.html', //生成的html存放路径，相对于path
+      template: './src/page/index.html', //html模板路径
+      inject: 'body', //js插入的位置，true/'head'/'body'/false 
+      chunks: ['vendor', 'index'],//需要引入的chunk，不配置就会引入所有页面的资源
       minify: { //压缩HTML文件    
         removeComments: true, //移除HTML中的注释
         collapseWhitespace: false //删除空白符与换行符

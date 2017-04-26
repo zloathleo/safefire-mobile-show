@@ -8,4 +8,6 @@ http://2.gp/Hr6s
 
 
 release v0.10
-1.使用react-router更新项目，同时修复多次点击analyze页的性能问题-clearInterval
+1.内容结构调整
+2.使用react-router更新项目
+3.同时修复多次点击analyze页的性能问题-clearInterval

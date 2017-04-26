@@ -27,6 +27,7 @@ module.exports = {
   devServer: {
     contentBase: 'public', // Relative directory for base of server
     // devtool: 'eval',
+    
     hot: true, // Live-reload
     inline: true,
     port: 3000, // Port Number

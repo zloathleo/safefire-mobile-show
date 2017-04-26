@@ -38,7 +38,6 @@ const styles = {
   }
 };
 
-
 class Main extends React.Component {
 
   state = {
@@ -61,26 +60,24 @@ class Main extends React.Component {
   }
 
   doLogout(e) {
-    window.location = '/';
+    window.location = global._currentPath;
     return false;
   }
 
   handleChangeDrawerItem(_key, _nativeEvent) {
     //改变页
     let _routerHistory = this.router.history;
-    // console.log(_routerHistory);
-    // console.log('handleChangeDrawerItem'); 
     if (_key == 'Overview') {
-      _routerHistory.replace('/main/overview');
+      _routerHistory.replace('overview');
     } else if (_key == 'Analyze') {
-      _routerHistory.replace('/main/analyze');
+      _routerHistory.replace('analyze');
     }
     this.setState({ open: false, title: _key });
   }
 
   render() {
 
-
+    console.log('main render:' + global._currentPath);
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
@@ -105,8 +102,8 @@ class Main extends React.Component {
 
           <Router ref={(ref) => this.router = ref} >
             <div>
-              <Route path='/main/overview' component={() => (<Overview handleChangeDrawerItem={this.handleChangeDrawerItem} />)} />
-              <Route path='/main/analyze' component={Analyze} />
+              <Route path={global._currentPath + 'main/overview'} component={() => (<Overview handleChangeDrawerItem={this.handleChangeDrawerItem} />)} />
+              <Route path={global._currentPath + 'main/analyze'} component={Analyze} />
             </div>
           </Router >
 

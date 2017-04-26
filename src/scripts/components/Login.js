@@ -11,7 +11,7 @@ class Login extends React.Component {
     state = {
         login: true,
     };
-  
+
     constructor(props) {
         super(props);
         this.mi
@@ -23,7 +23,7 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
-        let _duration = 800; 
+        let _duration = 800;
         this.loginHiddenAnim = Animejs({
             targets: this.loginForm,
             height: 0,
@@ -138,7 +138,7 @@ class Login extends React.Component {
                             <input type="password" placeholder="password" ref={(ref) => this.loginPassword = ref} />
                             <button onClick={this.doLogin} >login</button>
                             {/*链接Link*/}
-                            <Link ref={(ref) => this.loginLink = ref} to="/main/overview"></Link>
+                            <Link ref={(ref) => this.loginLink = ref} to={"main/overview"}></Link>
                             <p className="message" onClick={this.toRegister}>Not registered? <a href="#">Create an account</a></p>
 
                         </div>

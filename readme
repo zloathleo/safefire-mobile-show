@@ -11,3 +11,9 @@ release v0.10
 1.内容结构调整
 2.使用react-router更新项目
 3.同时修复多次点击analyze页的性能问题-clearInterval
+
+release v0.11
+1.内容结构调整
+2.增加about页面
+3.使用react-router更新项目
+4.同时修复多次点击analyze页的性能问题-clearInterval

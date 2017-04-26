@@ -3,21 +3,21 @@ import ReactDOM from 'react-dom';
 
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-
-import Overview from "./Overview";
-import Analyze from "./Analyze";
-
 import { AppBar, Drawer, MenuItem, Paper, IconButton } from 'material-ui';
+
+//icon
+import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 
 //material-ui bug
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import DrawerContent from "./DrawerContent"
+import Overview from './Overview';
+import Analyze from './Analyze';
+import About from './About'
+import DrawerContent from './DrawerContent'
 
-//icon
-import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 
 injectTapEventPlugin();
 
@@ -71,6 +71,8 @@ class Main extends React.Component {
       _routerHistory.replace('overview');
     } else if (_key == 'Analyze') {
       _routerHistory.replace('analyze');
+    } else if (_key == 'About') {
+      _routerHistory.replace('about');
     }
     this.setState({ open: false, title: _key });
   }
@@ -104,6 +106,7 @@ class Main extends React.Component {
             <div>
               <Route path={global._currentPath + 'main/overview'} component={() => (<Overview handleChangeDrawerItem={this.handleChangeDrawerItem} />)} />
               <Route path={global._currentPath + 'main/analyze'} component={Analyze} />
+              <Route path={global._currentPath + 'main/about'} component={About} />
             </div>
           </Router >
 

@@ -9,8 +9,8 @@ import IconArrowUpward from 'material-ui/svg-icons/navigation/arrow-upward';
 
 import { transparent, black } from 'material-ui/styles/colors';
 
-import Utils from './Utils';
-import DataRandom from './DataRandom';
+import Utils from './common/Utils';
+import DataRandom from './common/DataRandom';
 
 const styles = {
     paper: {

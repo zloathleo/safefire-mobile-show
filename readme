@@ -1,20 +1,14 @@
-远程移动展示项目
+温度场在线演示系统
+
+release v0.11
+1.修改访问链接，内容结构调整
+2.增加about页面
+3.使用react-router更新项目
+4.同时修复多次点击analyze页的性能问题-clearInterval
+5.优化系统，增加js压缩，提升访问速度
 
 访问全Url:
 https://zloathleo.github.io/safefire-demo/
 
 访问短Url:
-http://2.gp/Hr6s
-
-
-release v0.10
-1.内容结构调整
-2.使用react-router更新项目
-3.同时修复多次点击analyze页的性能问题-clearInterval
-
-release v0.11
-1.内容结构调整
-2.增加about页面
-3.使用react-router更新项目
-4.同时修复多次点击analyze页的性能问题-clearInterval
-4.优化系统，增加js压缩，提升访问速度
+http://2.gp/Hr6s 

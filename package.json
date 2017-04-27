@@ -42,13 +42,10 @@
   },
   "dependencies": {
     "animejs": "^2.0.2",
-    "chart.js": "^2.5.0",
-    "fs-extra": "^2.0.0",
-    "konva": "^1.4.0",
+    "chart.js": "^2.5.0", 
     "material-ui": "^0.17.1",
     "moment": "^2.18.1",
-    "react-chartjs": "^0.8.0",
-    "react-konva": "^1.1.1",
+    "react-chartjs": "^0.8.0", 
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1"

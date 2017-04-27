@@ -5,10 +5,10 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin'); //抽取CSS文�
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
-module.exports = {
+var webpackConfig = {
   entry: {
-    vendor: ['react', 'react-dom'],
-    index: './src/scripts/index.js',  
+    vendor: ['react', 'react-dom', 'material-ui'],
+    index: './src/scripts/index.js',
   },
   output: {
     path: path.join(__dirname, 'public'), //输出目录的配置，模板、样式、脚本、图片等资源的路径配置都相对于它
@@ -27,7 +27,7 @@ module.exports = {
   devServer: {
     contentBase: 'public', // Relative directory for base of server
     // devtool: 'eval',
-    
+
     hot: true, // Live-reload
     inline: true,
     port: 3000, // Port Number
@@ -41,7 +41,7 @@ module.exports = {
     }),
 
     new ExtractTextPlugin('css/[name]-bundle.css'), //单独使用link标签加载css并设置路径，相对于output配置中的publickPath 
- 
+
     //根据模板插入css/js等生成最终HTML
     new HtmlWebpackPlugin({
       // favicon: './src/img/favicon.ico', //favicon路径，通过webpack引入同时可以生成hash值
@@ -56,7 +56,6 @@ module.exports = {
       hash: true, //为静态资源生成hash值
     }),
 
-
     //复制资源文件
     new CopyWebpackPlugin([
       {
@@ -66,4 +65,24 @@ module.exports = {
     ]),
     new webpack.HotModuleReplacementPlugin() //热加载
   ],
+};
+
+
+
+module.exports = function makeWebpackConfig(cfgEnv) {
+
+  if (cfgEnv && cfgEnv.compress === 'true') { 
+    console.log('cfgEnv.compress------------------:');
+    webpackConfig.plugins.push(
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
+      })
+    );
+
+  }
+
+
+  return webpackConfig;
 };
